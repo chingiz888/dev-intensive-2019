@@ -4,7 +4,8 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import ru.skillbranch.devintensive.extensions.*
-import ru.skillbranch.devintensive.models.User
+import ru.skillbranch.devintensive.models.*
+import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
 /**
@@ -113,4 +114,41 @@ class ExampleUnitTest {
     fun test_of_Date_add() {
         println( Date().add(2, TimeUnit.SECOND)  )
     }
+
+
+    @Test
+    fun test_of_Message() {
+        val msg = TextMessage(id = "", from = User(""), chat = Chat(""), text = "text",  date = Date())
+        println(msg)
+    }
+
+
+    @Test
+    fun test_abstract_factory() {
+        val user = User.makeUser("Чингиз Байшурин")
+        val msg1 = BaseMessage.makeMessage(user, Chat("0"), payload = "any text message", type = "text")
+        val msg2 = BaseMessage.makeMessage(user, Chat("0"), payload = "any image url", type = "image")
+
+        when(msg2) {
+            is TextMessage -> println("this is text message")
+            is ImageMessage -> println("this is image message")
+            else -> print("undefined")
+        }
+
+        println("")
+        println( msg1.formatMessage() )
+        println("")
+        println( msg2.formatMessage() )
+    }
+
+
+    @Test
+    fun test_parse_full_name(){
+
+        assertEquals("null null",  Utils.parseFullName(null) )
+        assertEquals("null null",  Utils.parseFullName("") )
+        assertEquals("null null",  Utils.parseFullName(" ") )
+        assertEquals("John null",  Utils.parseFullName("John") )
+    }
+
 }
