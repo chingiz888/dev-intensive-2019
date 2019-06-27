@@ -13,4 +13,14 @@ object Utils {
         // infix style, instead of Pair(firtsName, lastName)
         return firstName to lastName
     }
+
+    //TODO FIX ME!!!
+    fun transliteration(payload: String, divider: String = " ") : String {
+        return ""
+    }
+
+    //TODO FIX ME!!!
+    fun toInitials(firstName: String?, lastName: String?) : String? {
+        return null
+    }
 }

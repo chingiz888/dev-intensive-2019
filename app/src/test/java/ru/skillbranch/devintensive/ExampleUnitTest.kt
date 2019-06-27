@@ -6,6 +6,7 @@ import org.junit.Assert.*
 import ru.skillbranch.devintensive.extensions.TimeUnits
 import ru.skillbranch.devintensive.extensions.add
 import ru.skillbranch.devintensive.extensions.format
+import ru.skillbranch.devintensive.extensions.toUserView
 import ru.skillbranch.devintensive.models.User
 import java.util.*
 
@@ -91,5 +92,18 @@ class ExampleUnitTest {
             ${user3.lastVisit?.format()}
             ${user4.lastVisit?.format()}
         """.trimIndent())
+    }
+
+
+    @Test
+    fun test_of_data_mapping() {
+        val user = User.makeUser("Чингиз Байшурин")
+        val user_copy = user.copy(lastVisit = Date().add(-100))
+        val userView = user_copy.toUserView()
+
+        print(user)
+        userView.printMe()
+
+
     }
 }
