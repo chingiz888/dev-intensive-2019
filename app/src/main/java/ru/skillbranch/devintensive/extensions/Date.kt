@@ -15,15 +15,15 @@ fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
     return dateFormate.format(this)
 }
 
-fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
+fun Date.add(value: Int, units: TimeUnit = TimeUnit.SECOND): Date {
 
     var time = this.time
 
     time += when(units) {
-        TimeUnits.SECOND -> value * SECOND
-        TimeUnits.MINUTE -> value * MINUTE
-        TimeUnits.HOUR -> value * HOUR
-        TimeUnits.DAY -> value * DAY
+        TimeUnit.SECOND -> value * SECOND
+        TimeUnit.MINUTE -> value * MINUTE
+        TimeUnit.HOUR -> value * HOUR
+        TimeUnit.DAY -> value * DAY
     }
     this.time = time
     return this
@@ -35,7 +35,7 @@ fun Date.humanizeDiff(): String {
 }
 
 
-enum class TimeUnits {
+enum class TimeUnit {
     SECOND,
     MINUTE,
     HOUR,
