@@ -1,5 +1,8 @@
 package ru.skillbranch.devintensive.utils
 
+import com.google.gson.Gson
+import ru.skillbranch.devintensive.models.Letters
+
 object Utils {
 
     fun parseFullNameToPair(fullName: String?): Pair<String?, String?>{
@@ -20,13 +23,36 @@ object Utils {
         return "${firstName} ${lastName}"
     }
 
-    //TODO FIX ME!!!
+
     fun transliteration(payload: String, divider: String = " ") : String {
-        return ""
+
+        val clearCharArr = Letters.strArray.toCharArray()
+            .filter { i -> !i.isWhitespace() }
+            .filter { i -> !i.equals('"') }
+        val pairs = clearCharArr.joinToString("").split(",")
+
+
+        var lettersMap: MutableMap<String, String> = mutableMapOf()
+
+        pairs.forEach{ pair ->
+            var let = (pair.split(":"))
+            lettersMap.put( let[0].toString(), let[1].toString()  )
+        }
+
+
+        var trans = payload.split("").map { str ->
+            if( lettersMap.containsKey(str.toLowerCase()) ) lettersMap.get(str.toLowerCase()) else str
+         }
+
+
+        return trans.joinToString("").split(" ").map { word -> word.capitalize() }
+            .joinToString(divider)
     }
 
-    //TODO FIX ME!!!
-    fun toInitials(firstName: String?, lastName: String?) : String? {
-        return null
+    fun toInitials(firstName: String?, lastName: String?) : String {
+
+        val a = firstName?.trim()?.firstOrNull()?.toUpperCase()?.toString() ?: ""
+        val b = lastName?.trim()?.firstOrNull()?.toUpperCase()?.toString() ?: ""
+        return if ( "$a$b".equals("") ) "null" else "$a$b"
     }
 }

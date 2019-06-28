@@ -31,7 +31,40 @@ fun Date.add(value: Int, units: TimeUnit = TimeUnit.SECOND): Date {
 
 //TODO FIX ME!!!
 fun Date.humanizeDiff(): String {
-    return ""
+
+    val delta = Date().time - this.time
+
+
+    return  if (delta < SECOND * 60) { "несколько секунд назад" }
+            else if (delta < MINUTE * 60) {
+
+                val del = delta/1000/60
+                when (del) {
+                    in 0..1 -> "${del} минуту назад"
+                    in 1..4 -> "${del} минуты назад"
+                    else -> "${del} минут назад"
+                }
+            }
+
+            else if (delta < HOUR  * 24)  {
+                val del = delta/1000/60/60
+                when (del) {
+                    in 0..1 -> "${del} час назад"
+                    in 1..4 -> "${del} часа назад"
+                    else -> "${del} часов назад"
+                }
+
+            }
+            else if (delta < DAY * 365)  {
+                val del = delta/1000/60/60/24
+                when (del) {
+                    in 0..1 -> "${del} день назад"
+                    in 1..4 -> "${del} дня назад"
+                    else -> "${del} дней назад"
+                }
+
+            }
+            else "давно"
 }
 
 
