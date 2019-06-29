@@ -1,6 +1,6 @@
-package ru.skillbranch.devintensive.models
+package ru.skillbranch.devintensive.Models
 
-import ru.skillbranch.devintensive.utils.Utils
+import ru.skillbranch.devintensive.Utils.Utils
 import java.util.*
 
 

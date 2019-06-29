@@ -1,7 +1,6 @@
-package ru.skillbranch.devintensive.utils
+package ru.skillbranch.devintensive.Utils
 
-import com.google.gson.Gson
-import ru.skillbranch.devintensive.models.Letters
+import ru.skillbranch.devintensive.Models.Letters
 
 object Utils {
 

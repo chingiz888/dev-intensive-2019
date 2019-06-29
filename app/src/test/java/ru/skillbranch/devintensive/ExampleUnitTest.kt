@@ -3,9 +3,9 @@ package ru.skillbranch.devintensive
 import org.junit.Test
 
 import org.junit.Assert.*
-import ru.skillbranch.devintensive.extensions.*
-import ru.skillbranch.devintensive.models.*
-import ru.skillbranch.devintensive.utils.Utils
+import ru.skillbranch.devintensive.Extensions.*
+import ru.skillbranch.devintensive.Models.*
+import ru.skillbranch.devintensive.Utils.Utils
 import java.util.*
 
 /**
