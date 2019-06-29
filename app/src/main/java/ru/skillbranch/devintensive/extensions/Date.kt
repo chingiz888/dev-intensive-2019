@@ -106,7 +106,7 @@ fun Date.humanizeDiff(): String {
             }
             else {
                 if(past) "более года назад"
-                else "через год"
+                else "более чем через год"
             }
 }
 
