@@ -26,26 +26,38 @@ object Utils {
 
     fun transliteration(payload: String, divider: String = " ") : String {
 
+        // first clear provided text fragment from " and whitespaces
         val clearCharArr = Letters.strArray.toCharArray()
             .filter { i -> !i.isWhitespace() }
             .filter { i -> !i.equals('"') }
+
+        // then make array of transliteration pairs
         val pairs = clearCharArr.joinToString("").split(",")
 
-
+        // then make HashMap
         var lettersMap: MutableMap<String, String> = mutableMapOf()
-
         pairs.forEach{ pair ->
             var let = (pair.split(":"))
             lettersMap.put( let[0].toString(), let[1].toString()  )
         }
 
+        // then expand our HashMap for capital letters
+        for(i in 0..pairs.size-1) {
+            val pair = pairs[i].split(":")
+            lettersMap.put(  pair[0].toString().capitalize(),
+                             pair[1].toString().capitalize() )
+        }
 
-        var trans = payload.split("").map { str ->
-            if( lettersMap.containsKey(str.toLowerCase()) ) lettersMap.get(str.toLowerCase()) else str
+
+        var transliterationResutl = payload.split("").map { str ->
+            if( lettersMap.containsKey(str) ) lettersMap.get(str) else str
          }
 
 
-        return trans.joinToString("").split(" ").map { word -> word.capitalize() }
+        return transliterationResutl
+            .joinToString("")
+            .split(" ")
+//            .map { word -> word.capitalize() }
             .joinToString(divider)
     }
 

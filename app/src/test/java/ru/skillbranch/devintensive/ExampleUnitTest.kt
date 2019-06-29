@@ -171,6 +171,14 @@ class ExampleUnitTest {
         assertEquals( "Chingiz Baishurin", Utils.transliteration("Чингиз Байшурин") )
         assertEquals( "Ivan Stereotipov", Utils.transliteration("Иван Стереотипов") )
         assertEquals( "Amazing_Petr", Utils.transliteration("Amazing Петр", divider = "_") )
+
+
+        assertEquals( "Zh Zh", Utils.transliteration("Ж Ж") )
+        assertEquals( "ZhZh", Utils.transliteration("ЖЖ") )
+
+        assertEquals( "AbrAKadabra", Utils.transliteration("AbrAKadabra") )
+
+        assertEquals( "StraNNIi NikVash'e", Utils.transliteration("СтраННЫй НикВаще") )
     }
 
 
