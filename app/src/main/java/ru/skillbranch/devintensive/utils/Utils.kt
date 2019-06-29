@@ -1,6 +1,4 @@
-package ru.skillbranch.devintensive.Utils
-
-import ru.skillbranch.devintensive.Models.Letters
+package ru.skillbranch.devintensive.utils
 
 object Utils {
 
@@ -26,7 +24,7 @@ object Utils {
     fun transliteration(payload: String, divider: String = " ") : String {
 
         // first clear provided text fragment from " and whitespaces
-        val clearCharArr = Letters.strArray.toCharArray()
+        val clearCharArr = strArray.toCharArray()
             .filter { i -> !i.isWhitespace() }
             .filter { i -> !i.equals('"') }
 
@@ -66,4 +64,48 @@ object Utils {
         val b = lastName?.trim()?.firstOrNull()?.toUpperCase()?.toString() ?: ""
         return if ( "$a$b".equals("") ) "null" else "$a$b"
     }
+
+
+
+
+
+
+    val strArray = """
+        "а": "a",
+        "б": "b",
+        "в": "v",
+        "г": "g",
+        "д": "d",
+        "е": "e",
+        "ё": "e",
+        "ж": "zh",
+        "з": "z",
+        "и": "i",
+        "й": "i",
+        "к": "k",
+        "л": "l",
+        "м": "m",
+        "н": "n",
+        "о": "o",
+        "п": "p",
+        "р": "r",
+        "с": "s",
+        "т": "t",
+        "у": "u",
+        "ф": "f",
+        "х": "h",
+        "ц": "c",
+        "ч": "ch",
+        "ш": "sh",
+        "щ": "sh'",
+        "ъ": "",
+        "ы": "i",
+        "ь": "",
+        "э": "e",
+        "ю": "yu",
+        "я": "ya"
+    """.trimIndent()
+
+
+
 }
