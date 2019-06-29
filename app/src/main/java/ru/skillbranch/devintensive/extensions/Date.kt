@@ -1,6 +1,5 @@
 package ru.skillbranch.devintensive.extensions
 
-import java.lang.IllegalStateException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,16 +15,16 @@ fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
     return dateFormate.format(this)
 }
 
-fun Date.add(value: Int, units: TimeUnit = TimeUnit.SECOND): Date {
+fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
 
     var time = this.time
 
     time += when(units) {
-        TimeUnit.SECOND -> value * SECOND
-        TimeUnit.MINUTE -> value * MINUTE
-        TimeUnit.HOUR -> value * HOUR
-        TimeUnit.DAY -> value * DAY
-        TimeUnit.YEAR -> value * YEAR
+        TimeUnits.SECOND -> value * SECOND
+        TimeUnits.MINUTE -> value * MINUTE
+        TimeUnits.HOUR -> value * HOUR
+        TimeUnits.DAY -> value * DAY
+        TimeUnits.YEAR -> value * YEAR
     }
     this.time = time
     return this
@@ -35,71 +34,84 @@ fun Date.add(value: Int, units: TimeUnit = TimeUnit.SECOND): Date {
 fun Date.humanizeDiff(): String {
 
     var delta = Date().time - this.time
+    delta = delta/1000 * 1000
     var past = true
     if (delta < 0) {
         past = false
         delta = -delta
     }
 
-    fun plurals(i: Long, timeunit: TimeUnit): String {
+    fun plurals(i: Long, timeunit: TimeUnits): String {
         return if(i in 0..1) {
             when(timeunit) {
-                TimeUnit.SECOND ->  "$i секунду"
-                TimeUnit.MINUTE ->  "$i минуту"
-                TimeUnit.HOUR ->  "$i час"
-                TimeUnit.DAY ->  "$i день"
-                TimeUnit.YEAR ->  "$i год"
+                TimeUnits.SECOND ->  "$i секунду"
+                TimeUnits.MINUTE ->  "$i минуту"
+                TimeUnits.HOUR ->  "$i час"
+                TimeUnits.DAY ->  "$i день"
+                TimeUnits.YEAR ->  "$i год"
             }
         } else if(i in 2..4) {
             when(timeunit) {
-                TimeUnit.SECOND ->  "$i секунды"
-                TimeUnit.MINUTE ->  "$i минуты"
-                TimeUnit.HOUR ->  "$i часа"
-                TimeUnit.DAY ->  "$i дня"
-                TimeUnit.YEAR ->  "$i года"
+                TimeUnits.SECOND ->  "$i секунды"
+                TimeUnits.MINUTE ->  "$i минуты"
+                TimeUnits.HOUR ->  "$i часа"
+                TimeUnits.DAY ->  "$i дня"
+                TimeUnits.YEAR ->  "$i года"
             }
         } else {
             when(timeunit) {
-                TimeUnit.SECOND ->  "$i секунд"
-                TimeUnit.MINUTE ->  "$i минут"
-                TimeUnit.HOUR ->  "$i часов"
-                TimeUnit.DAY ->  "$i дней"
-                TimeUnit.YEAR ->  "$i лет"
+                TimeUnits.SECOND ->  "$i секунд"
+                TimeUnits.MINUTE ->  "$i минут"
+                TimeUnits.HOUR ->  "$i часов"
+                TimeUnits.DAY ->  "$i дней"
+                TimeUnits.YEAR ->  "$i лет"
             }
         }
     }
-
-    return  if (delta < SECOND * 60) {
+    
+    return  if (delta <= SECOND * 1) {
+                if(past) "только что"
+                else "только что"
+            }
+            else if (delta <= SECOND * 45) {
                 if(past) "несколько секунд назад"
                 else "через несколько секунд"
-    }
-            else if (delta < MINUTE * 60) {
+            }
+            else if (delta <= SECOND * 75) {
+                if(past) "минуту назад"
+                else "через минуту"
+            }
+            else if (delta <= MINUTE * 45) {
                 val del = delta/1000/60
-                if(past) plurals(del, TimeUnit.MINUTE) + " назад"
-                else "через " + plurals(del, TimeUnit.MINUTE)
+                if(past) plurals(del, TimeUnits.MINUTE) + " назад"
+                else "через " + plurals(del, TimeUnits.MINUTE)
             }
-
-            else if (delta < HOUR  * 24)  {
+            else if (delta <= MINUTE * 75)  {
+                if(past) "час назад"
+                else "через час"
+            }
+            else if (delta <= HOUR  * 22)  {
                 val del = delta/1000/60/60
-                if(past) plurals(del, TimeUnit.HOUR) + " назад"
-                else "через " + plurals(del, TimeUnit.HOUR)
+                if(past) plurals(del, TimeUnits.HOUR) + " назад"
+                else "через " + plurals(del, TimeUnits.HOUR)
             }
-            else if (delta < DAY * 365)  {
+            else if (delta <= HOUR  * 26)  {
+                if(past) "день назад"
+                else "через день"
+            }
+            else if (delta <= DAY * 360)  {
                 val del = delta/1000/60/60/24
-                if(past) plurals(del, TimeUnit.DAY) + " назад"
-                else "через " + plurals(del, TimeUnit.DAY)
+                if(past) plurals(del, TimeUnits.DAY) + " назад"
+                else "через " + plurals(del, TimeUnits.DAY)
             }
             else {
-                val del = delta/1000/60/60/24/365
-                //                if(past) plurals(del, TimeUnit.YEAR) + " назад"
-                //                else "через " + plurals(del, TimeUnit.YEAR)
                 if(past) "более года назад"
                 else "через год"
             }
 }
 
 
-enum class TimeUnit {
+enum class TimeUnits {
     SECOND,
     MINUTE,
     HOUR,
