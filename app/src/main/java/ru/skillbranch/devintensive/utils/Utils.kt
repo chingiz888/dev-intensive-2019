@@ -2,7 +2,7 @@ package ru.skillbranch.devintensive.utils
 
 object Utils {
 
-    fun parseFullNameToPair(fullName: String?): Pair<String?, String?>{
+    fun parseFullName(fullName: String?): Pair<String?, String?>{
 
         val parts: List<String>? = fullName?.trim()?.split(" ")
         val firstName = if (parts?.getOrNull(0) != "") parts?.getOrNull(0) else null
@@ -12,13 +12,13 @@ object Utils {
         return firstName?.trim() to lastName?.trim()
     }
 
-    fun parseFullName(fullName: String?): String {
-
-
-        var (firstName, lastName) = parseFullNameToPair(fullName)
-
-        return "${firstName} ${lastName}"
-    }
+//    fun parseFullName(fullName: String?): String {
+//
+//
+//        var (firstName, lastName) = parseFullNameToPair(fullName)
+//
+//        return "${firstName} ${lastName}"
+//    }
 
 
     fun transliteration(payload: String, divider: String = " ") : String {
