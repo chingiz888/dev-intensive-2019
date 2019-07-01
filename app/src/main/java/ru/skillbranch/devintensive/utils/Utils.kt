@@ -58,11 +58,11 @@ object Utils {
             .joinToString(divider)
     }
 
-    fun toInitials(firstName: String?, lastName: String?) : String {
+    fun toInitials(firstName: String?, lastName: String?) : String? {
 
         val a = firstName?.trim()?.firstOrNull()?.toUpperCase()?.toString() ?: ""
         val b = lastName?.trim()?.firstOrNull()?.toUpperCase()?.toString() ?: ""
-        return if ( "$a$b".equals("") ) "null" else "$a$b"
+        return if ( "$a$b".equals("") ) null else "$a$b"
     }
 
 
