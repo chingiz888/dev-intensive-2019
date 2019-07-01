@@ -16,6 +16,6 @@ class ImageMessage(
 
     override fun formatMessage(): String = "${from?.firstName} " +
             "${if(isIncoming) "получил" else "отправил"} изображение " +
-            "$image " +
+            "\"$image\" " +
             "${date.humanizeDiff()}"
 }
