@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive.extensions
 
+import ru.skillbranch.devintensive.utils.Utils
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -11,10 +12,15 @@ const val DAY = 24 * HOUR
 const val YEAR = 365 * DAY
 
 
+
+
 fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
     val dateFormate = SimpleDateFormat(pattern, Locale("ru"))
     return dateFormate.format(this)
 }
+
+
+
 
 fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
 
@@ -42,33 +48,7 @@ fun Date.humanizeDiff(): String {
         delta = -delta
     }
 
-    fun plurals(i: Long, timeunit: TimeUnits): String {
-        return if(i in 0..1) {
-            when(timeunit) {
-                TimeUnits.SECOND ->  "$i секунду"
-                TimeUnits.MINUTE ->  "$i минуту"
-                TimeUnits.HOUR ->  "$i час"
-                TimeUnits.DAY ->  "$i день"
-                TimeUnits.YEAR ->  "$i год"
-            }
-        } else if(i in 2..4) {
-            when(timeunit) {
-                TimeUnits.SECOND ->  "$i секунды"
-                TimeUnits.MINUTE ->  "$i минуты"
-                TimeUnits.HOUR ->  "$i часа"
-                TimeUnits.DAY ->  "$i дня"
-                TimeUnits.YEAR ->  "$i года"
-            }
-        } else {
-            when(timeunit) {
-                TimeUnits.SECOND ->  "$i секунд"
-                TimeUnits.MINUTE ->  "$i минут"
-                TimeUnits.HOUR ->  "$i часов"
-                TimeUnits.DAY ->  "$i дней"
-                TimeUnits.YEAR ->  "$i лет"
-            }
-        }
-    }
+
     
     return  if (delta <= SECOND * 1) {
                 if(past) "только что"
@@ -84,8 +64,8 @@ fun Date.humanizeDiff(): String {
             }
             else if (delta <= MINUTE * 45) {
                 val del = delta/1000/60
-                if(past) plurals(del, TimeUnits.MINUTE) + " назад"
-                else "через " + plurals(del, TimeUnits.MINUTE)
+                if(past) Utils.plurals(del, TimeUnits.MINUTE) + " назад"
+                else "через " + Utils.plurals(del, TimeUnits.MINUTE)
             }
             else if (delta <= MINUTE * 75)  {
                 if(past) "час назад"
@@ -93,8 +73,8 @@ fun Date.humanizeDiff(): String {
             }
             else if (delta <= HOUR  * 22)  {
                 val del = delta/1000/60/60
-                if(past) plurals(del, TimeUnits.HOUR) + " назад"
-                else "через " + plurals(del, TimeUnits.HOUR)
+                if(past) Utils.plurals(del, TimeUnits.HOUR) + " назад"
+                else "через " + Utils.plurals(del, TimeUnits.HOUR)
             }
             else if (delta <= HOUR  * 26)  {
                 if(past) "день назад"
@@ -102,8 +82,8 @@ fun Date.humanizeDiff(): String {
             }
             else if (delta <= DAY * 360)  {
                 val del = delta/1000/60/60/24
-                if(past) plurals(del, TimeUnits.DAY) + " назад"
-                else "через " + plurals(del, TimeUnits.DAY)
+                if(past) Utils.plurals(del, TimeUnits.DAY) + " назад"
+                else "через " + Utils.plurals(del, TimeUnits.DAY)
             }
             else {
                 if(past) "более года назад"
@@ -112,10 +92,14 @@ fun Date.humanizeDiff(): String {
 }
 
 
-enum class TimeUnits {
+enum class TimeUnits() {
     SECOND,
     MINUTE,
     HOUR,
     DAY,
-    YEAR
+    YEAR;
+
+    fun plural(value: Long): String {
+        return Utils.plurals(value, timeunit = this)
+    }
 }

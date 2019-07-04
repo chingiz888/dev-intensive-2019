@@ -1,5 +1,7 @@
 package ru.skillbranch.devintensive.utils
 
+import ru.skillbranch.devintensive.extensions.TimeUnits
+
 object Utils {
 
     fun parseFullName(fullName: String?): Pair<String?, String?>{
@@ -45,16 +47,11 @@ object Utils {
                              pair[1].toString().capitalize() )
         }
 
-
-        var transliterationResutl = payload.split("").map { str ->
+        return payload.split("").map { str ->
             if( lettersMap.containsKey(str) ) lettersMap.get(str) else str
          }
-
-
-        return transliterationResutl
             .joinToString("")
             .split(" ")
-//            .map { word -> word.capitalize() }
             .joinToString(divider)
     }
 
@@ -67,6 +64,36 @@ object Utils {
 
 
 
+    fun plurals(i: Long, timeunit: TimeUnits): String {
+
+        val j = i % 10
+
+        return if(j in 1..1) {
+            when(timeunit) {
+                TimeUnits.SECOND ->  "$i секунду"
+                TimeUnits.MINUTE ->  "$i минуту"
+                TimeUnits.HOUR ->  "$i час"
+                TimeUnits.DAY ->  "$i день"
+                TimeUnits.YEAR ->  "$i год"
+            }
+        } else if(j in 2..4) {
+            when(timeunit) {
+                TimeUnits.SECOND ->  "$i секунды"
+                TimeUnits.MINUTE ->  "$i минуты"
+                TimeUnits.HOUR ->  "$i часа"
+                TimeUnits.DAY ->  "$i дня"
+                TimeUnits.YEAR ->  "$i года"
+            }
+        } else {
+            when(timeunit) {
+                TimeUnits.SECOND ->  "$i секунд"
+                TimeUnits.MINUTE ->  "$i минут"
+                TimeUnits.HOUR ->  "$i часов"
+                TimeUnits.DAY ->  "$i дней"
+                TimeUnits.YEAR ->  "$i лет"
+            }
+        }
+    }
 
 
 
