@@ -20,25 +20,22 @@ fun String.stripHtml(): String {
 
 fun String.truncate(limit: Int = 16): String {
 
+    val x = this.trim()
+
     return if (this.isNotBlank()) {
-                if (this.length > limit) {
+                if (x.length > limit) {
 
-                    var truncated = this.substring(0, limit).trimEnd()
-//                    truncated = truncated.dropLast(1)
-//                    return "$truncated..."
+                    var truncated = x.substring(0, limit)
 
-
-                    if ( !truncated.last().isWhitespace() ) truncated += "..."
-                    else truncated = truncated.dropLast(1) + "..."
-
+                    if ( !x[limit].isWhitespace() ) truncated = truncated.trimEnd() + "..."
+                    else truncated = truncated.trimEnd()
                     return truncated
 
-
                 } else {
-                    this
+                    x
                 }
           } else {
-           this
+           x
           }
 
 
