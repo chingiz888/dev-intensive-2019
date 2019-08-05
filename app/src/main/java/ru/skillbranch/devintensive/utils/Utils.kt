@@ -1,6 +1,9 @@
 package ru.skillbranch.devintensive.utils
 
+import android.content.Context
 import ru.skillbranch.devintensive.extensions.TimeUnits
+import kotlin.math.roundToInt
+
 
 object Utils {
 
@@ -132,4 +135,22 @@ object Utils {
         "ю": "yu",
         "я": "ya"
     """.trimIndent()
+
+
+
+
+
+    fun convertPxToDp(context: Context, px: Int): Int {
+        return (px / context.resources.displayMetrics.density).roundToInt()
+    }
+
+    fun convertDpToPx(context: Context, dp: Float): Int {
+        return (dp * context.resources.displayMetrics.density).roundToInt()
+    }
+
+    fun convertSpToPx(context: Context, sp: Int): Int {
+        return sp * context.resources.displayMetrics.scaledDensity.roundToInt()
+    }
 }
+
+
